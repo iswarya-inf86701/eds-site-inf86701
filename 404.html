@@ -5,68 +5,111 @@
   <meta
     http-equiv="Content-Security-Policy"
     content="script-src 'nonce-aem' 'strict-dynamic' 'unsafe-inline' http: https:; base-uri 'self'; object-src 'none';"
-    move-to-http-header="true"
-  >
-  <title>Page not found</title>
+    move-to-http-header="true">
+
+  <title>404 - Page Not Found</title>
+
   <script nonce="aem" type="text/javascript">
     window.isErrorPage = true;
     window.errorCode = '404';
   </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="Page not found">
-  <script nonce="aem" src="/scripts/scripts.js" type="module"></script>
-  <script nonce="aem" type="module">
+  <meta property="og:title" content="404 - Page Not Found">
+
+  <script nonce="aem" src="/scripts/scripts.js" type="pe="module">
     window.addEventListener('load', () => {
       if (document.referrer) {
         const { origin, pathname } = new URL(document.referrer);
+
         if (origin === window.location.origin) {
           const backBtn = document.createElement('a');
-          backBtn.classList.add('button', 'error-button-back');
+          backBtn.classList.add('button', 'secondary');
           backBtn.href = pathname;
-          backBtn.textContent = 'Go back';
-          backBtn.title = 'Go back';
-          const btnContainer = document.querySelector('.button-container');
-          btnContainer.append(backBtn);
+          backBtn.textContent = 'Go Back';
+          document.querySelector('.button-container').append(backBtn);
         }
       }
     });
   </script>
+
   <script nonce="aem" type="module">
     import { sampleRUM } from '/scripts/aem.js';
     sampleRUM('404', { source: document.referrer });
   </script>
-  <link rel="stylesheet" href="/styles/styles.css">
-  <style>
+
+  /styles/styles.css
+  <link rel="stylesheet" href<style>
     main.error {
       min-height: calc(100vh - var(--nav-height));
       display: flex;
       align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
-    main.error .error-number {
-      width: 100%;
+    .error-wrapper {
+      max-width: 800px;
+      padding: 40px 20px;
     }
 
-    main.error .error-number text {
-      font-family: monospace;
+    .error-code {
+      font-size: 8rem;
+      font-weight: 700;
+      color: #d32f2f;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .error-title {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .error-description {
+      margin-bottom: 30px;
+      color: #666;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .button-container .button {
+      min-width: 140px;
     }
   </style>
-  <link rel="stylesheet" href="/styles/lazy-styles.css">
 </head>
 
 <body>
   <header></header>
+
   <main class="error">
-    <div class="section">
-      <svg viewBox="1 0 38 18" class="error-number">
-        <text x="0" y="17">404</text>
-      </svg>
-      <h2 class="error-message">Page Not Found</h2>
-      <p class="button-container">
-        <a href="/" class="button secondary error-button-home">Go home</a>
+    <div class="error-wrapper">
+
+      <h1 class="error-code">404</h1>
+
+      <h2 class="error-title">
+        Oops! Page Not Found
+      </h2>
+
+      <p class="error-description">
+        The page you're looking for may have been moved, deleted,
+        or the URL may be incorrect.
       </p>
+
+      <div class="button-container">
+        /
+          Go Home
+        </a>
+      </div>
+
     </div>
   </main>
+
   <footer></footer>
 </body>
 

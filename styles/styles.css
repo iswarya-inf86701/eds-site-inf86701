@@ -323,3 +323,8 @@ main .section.highlight {
   margin: 0;
   padding: 40px 0;
 }
+main .section.light-grey {
+background-color: #f2f2f2;
+margin: 0;
+padding: 40px 0
+}
