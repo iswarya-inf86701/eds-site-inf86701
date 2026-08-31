@@ -1,30 +1,60 @@
 export default async function decorate(block) {
-  const jsonUrl = block.textContent.trim();
-
-  try {
-    const response = await fetch(jsonUrl);
-    const json = await response.json();
-
-    block.innerHTML = '';
-
-    const ul = document.createElement('ul');
-
-    json.data.forEach((item) => {
-      const li = document.createElement('li');
-
-      li.innerHTML = `
-        <h3>${item.Product}</h3>
-        <p><strong>Company:</strong> ${item.Company}</p>
-        <p><strong>Category:</strong> ${item.Category}</p>
-        <p><strong>Price:</strong> ${item.Price}</p>
-      `;
-
-      ul.appendChild(li);
+  const response = await fetch('/productdata.json');
+  const json = await response.json();
+ 
+  const products = json.data || [];
+ 
+  const pageSize = 20;
+  let currentPage = 1;
+ 
+  function renderPage(page) {
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+ 
+    const currentProducts = products.slice(start, end);
+ 
+    const totalPages = Math.ceil(products.length / pageSize);
+ 
+    block.innerHTML = `
+      <div class="products">
+        ${currentProducts.map((product) => `
+          <div class="product-card">
+            <h3>${product.Name}</h3>
+            <p><strong>Company:</strong> ${product.Company}</p>
+            <p><strong>Category:</strong> ${product.Category}</p>
+            <p><strong>Price:</strong> ₹${product.Price}</p>
+          </div>
+        `).join('')}
+      </div>
+ 
+      <div class="pagination">
+        <button id="prevBtn" ${page === 1 ? 'disabled' : ''}>
+          Previous
+        </button>
+ 
+        <span class="page-info">
+          Page ${page} of ${totalPages}
+        </span>
+ 
+        <button id="nextBtn" ${page === totalPages ? 'disabled' : ''}>
+          Next
+        </button>
+      </div>
+    `;
+ 
+    const prevBtn = block.querySelector('#prevBtn');
+    const nextBtn = block.querySelector('#nextBtn');
+ 
+    prevBtn.addEventListener('click', () => {
+      currentPage--;
+      renderPage(currentPage);
     });
-
-    block.appendChild(ul);
-  } catch (e) {
-    console.error(e);
-    block.innerHTML = '<p>Failed to load product data.</p>';
+ 
+    nextBtn.addEventListener('click', () => {
+      currentPage++;
+      renderPage(currentPage);
+    });
   }
+ 
+  renderPage(currentPage);
 }
