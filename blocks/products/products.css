@@ -1,0 +1,11 @@
+.products ul {
+  list-style: none;
+  padding: 0;
+}
+
+.products li {
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
