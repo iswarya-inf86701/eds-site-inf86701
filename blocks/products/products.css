@@ -4,8 +4,13 @@
 }
 
 .products li {
-  padding: 12px;
-  margin-bottom: 12px;
   border: 1px solid #ddd;
   border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: #f8f8f8;
+}
+
+.products h3 {
+  margin-top: 0;
 }
