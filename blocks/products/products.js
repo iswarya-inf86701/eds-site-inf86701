@@ -1,26 +1,21 @@
 export default async function decorate(block) {
-  const jsonUrl = block.textContent.trim();
+  const response = await fetch('/productdata.json');
+  const json = await response.json();
 
-  try {
-    const response = await fetch(jsonUrl);
-    const data = await response.json();
+  const ul = document.createElement('ul');
 
-    const list = document.createElement('ul');
+  json.data.forEach((product) => {
+    const li = document.createElement('li');
 
-    data.data.forEach((item) => {
-      const li = document.createElement('li');
+    li.innerHTML = `
+      <h3>${product.Name}</h3>
+      <p>Product ID: ${product['Product ID']}</p>
+      <p>Category: ${product.Category}</p>
+      <p>Price: ${product.Price}</p>
+    `;
 
-      li.innerHTML = `
-        <strong>${item.Name}</strong>
-        <p>${item.Role}</p>
-      `;
+    ul.append(li);
+  });
 
-      list.appendChild(li);
-    });
-
-    block.innerHTML = '';
-    block.appendChild(list);
-  } catch (error) {
-    console.error('Failed to load JSON', error);
-  }
+  block.append(ul);
 }
